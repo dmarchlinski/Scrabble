@@ -1,7 +1,4 @@
-
 def scrabble_score(word):
-
-
 
     score = {"a": 1, "c": 3, "b": 3, "e": 1, "d": 2, "g": 2,
              "f": 4, "i": 1, "h": 4, "k": 5, "j": 8, "m": 3,
@@ -14,4 +11,5 @@ def scrabble_score(word):
         total = total+score[i.lower()]
     return total
 
-print scrabble_score(word= raw_input("Word: "))
+
+print scrabble_score(word=raw_input("Word: "))
