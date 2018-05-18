@@ -1,4 +1,19 @@
 import random
+import os
+
+
+def scrabble_score(word):
+    score = {"a": 1, "c": 3, "b": 3, "e": 1, "d": 2, "g": 2,
+             "f": 4, "i": 1, "h": 4, "k": 5, "j": 8, "m": 3,
+             "l": 1, "o": 1, "n": 1, "q": 10, "p": 3, "s": 1,
+             "r": 1, "u": 1, "t": 1, "w": 4, "v": 4, "y": 4,
+             "x": 8, "z": 10, "_": 0}
+    total = 0
+    for i in word:
+        total = total + score[i.lower()]
+    return total
+
+
 def main():
     alphabet = "BCDFGHJKLMNPQRSTVQXYZ"
     vowels = "AEIOU"
@@ -56,20 +71,23 @@ def main():
             index = 0
             words = open("words.txt", "r").readlines()
             while valid:
-                guess = raw_input("Create a word with your chosen letters: ")
+                word = raw_input("Create a word with your chosen letters: ")
                 valid2 = True
-                for i in guess:
+                for i in word:
                     while valid2:
-                        if i not in hand:
-                            print "That is not a valid guess. Enter something only uses your chosen letters and is a word."
+                        print i.upper()
+                        print hand
+                        if i.upper() not in hand:
+                            print "That is not a valid word. Enter something only uses your chosen letters and is a word."
                             valid = True
                             valid2 = False
-                        elif guess + "\n" in words:
-                            if i == max(guess):
+                        elif i == max(word):
+                            if word + "\n" in words:
                                 print "That is a valid word!"
-                                print "The score for that word is", scrabble_score(guess)
+                                print "The score for that word is", scrabble_score(word)
                                 valid = False
                                 valid2 = False
+                            valid2 = False
                 index += 1
 
 
@@ -115,5 +133,5 @@ def main():
                 if column1 < column2:
                     board_letters[row1][column1 + i] = word[i] #printing left to right
 
-        print "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n" #clears page for new board print
+        os.system("clear") #clears page for new board print
 main()
