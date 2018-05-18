@@ -1,6 +1,6 @@
 import random
 def main():
-    alphabet = "ABCDEFGHIJKLMNOPQRSTUVQXYZ"
+    alphabet = "BCDFGHJKLMNPQRSTVQXYZ"
     vowels = "AEIOU"
     board_letters = [[" ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
                      [" ", " ", " ", " ", "S", " ", " ", " ", " ", " "],
@@ -52,7 +52,25 @@ def main():
             column2 = input("column of second letter: ")
             column2 = column2 - 1
 
-            word = raw_input("enter word using letters in hand: ")
+            valid = True
+            index = 0
+            words = open("words.txt", "r").readlines()
+            while valid:
+                guess = raw_input("Create a word with your chosen letters: ")
+                valid2 = True
+                for i in guess:
+                    while valid2:
+                        if i not in hand:
+                            print "That is not a valid guess. Enter something only uses your chosen letters and is a word."
+                            valid = True
+                            valid2 = False
+                        elif guess + "\n" in words:
+                            if i == max(guess):
+                                print "That is a valid word!"
+                                print "The score for that word is", scrabble_score(guess)
+                                valid = False
+                                valid2 = False
+                index += 1
 
 
             if column1 == column2:
