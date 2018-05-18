@@ -90,17 +90,46 @@ def main():
                 index += 1
 
 
+            exist_letters = []
+            for i in board_letters:
+                for j in i:
+                    if j != " ":
+                        exist_letters.append(j)
+            hand_temp = hand[:]
+            count_hand = 0
             if column1 == column2:
 
                 if row1 > row2:  # bottom to top
                     if len(word) <= row1 + 1:
-                        good_len = False
+                        for i in range(len(word)):
+                            if board_letters[row1 - i][column1] == word[i]:
+                                hand_temp.append(word[i])
+                            if word[i] in hand:
+                                count_hand = count_hand + 1
+                                del hand_temp[i]
+                            else:
+                                print "invalid letter(s)"
+                                count_hand = 0
+                            if count_hand == len(word):
+                                for i in range(len(word)):
+                                    board_letters[row1 - i][column1] = word[i]
                     else:
                         print "does not fit on board"
 
                 if row2 > row1:  # top to bottom
                     if len(word) <= 10 - row1:
-                        good_len = False
+                        for i in range(len(word)):
+                             if board_letters[row1 + i][column1] == word[i]:
+                                 hand_temp.append(word[i])
+                                 if word[i] in hand:
+                                     count_hand = count_hand + 1
+                                     del hand_temp[i]
+                                 else:
+                                     print "invalid letter(s)"
+                                     count_hand = 0
+                                 if count_hand == len(word):
+                                     for i in range(len(word)):
+                                         board_letters[row1 + i][column1] = word[i]
                     else:
                         print "does not fit on board"
 
@@ -108,29 +137,46 @@ def main():
 
                 if column1 > column2:  # right to left
                     if len(word) <= column1 + 1:
-                        good_len = False
+                        for i in range(len(word)):
+                            if board_letters[row1][column1 - i] == word[i]:
+                                hand_temp.append(word[i])
+                                if word[i] in hand:
+                                    count_hand = count_hand + 1
+                                    del hand_temp[i]
+                                else:
+                                    print "invalid letter(s)"
+                                    count_hand = 0
+                                if count_hand == len(word):
+                                    for i in range(len(word)):
+                                        board_letters[row1][column1 - i] = word[i]
                     else:
                         print "does not fit on board"
 
                 if column2 > column1:  # left to right
                     if len(word) <= 10 - column1:
-                        good_len = False
+                        for i in range(len(word)):
+                            if board_letters[row1][column1 + i] == word[i]:
+                                hand_temp.append(word[i])
+                                if word[i] in hand:
+                                    count_hand = count_hand + 1
+                                    del hand_temp[i]
+                                else:
+                                    print "invalid letter(s)"
+                                    count_hand = 0
+                                if count_hand == len(word):
+                                    for i in range(len(word)):
+                                        board_letters[row1][column1 + 1] = word[i]
                     else:
                         print "does not fit on board"
 
+                if count_hand == len(word):
+                    good_len = False
+                    del hand[:]
+                    hand=hand_temp[:]
+
         word = word.upper()
 
-        for i in range(len(word)):
-            if column1 == column2:
-                if row1 > row2:
-                    board_letters[row1 - i][column1] = word[i] #printing bottom to top
-                if row1 < row2:
-                    board_letters[row1 + i][column1] = word[i] #printing top to bottom
-            if row1 == row2:
-                if column1 > column2:
-                    board_letters[row1][column1 - i] = word[i] #printing right to left
-                if column1 < column2:
-                    board_letters[row1][column1 + i] = word[i] #printing left to right
 
-        os.system("clear") #clears page for new board print
+
+        print "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n" #clears page for new board print
 main()
