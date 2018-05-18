@@ -78,15 +78,14 @@ def main():
                         print i.upper()
                         print hand
                         if i.upper() not in hand:
-                            print "That is not a valid word. Enter something only uses your chosen letters and is a word."
-                            valid = True
-                            valid2 = False
-                        elif i == max(word):
-                            if word + "\n" in words:
-                                print "That is a valid word!"
-                                print "The score for that word is", scrabble_score(word)
-                                valid = False
+                            if word + "\n" not in words:
+                                print "That is not a valid word. Enter something only uses your chosen letters and is a word."
+                                valid = True
                                 valid2 = False
+                        elif i == max(word):
+                            print "That is a valid word!"
+                            print "The score for that word is", scrabble_score(word)
+                            valid = False
                             valid2 = False
                 index += 1
 
