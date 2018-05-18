@@ -84,7 +84,7 @@ def main():
                                 valid2 = False
                         elif i == max(word):
                             print "That is a valid word!"
-                            print "The score for that word is", scrabble_score(word)
+                            print "The score for that word is: ", scrabble_score(word)
                             valid = False
                             valid2 = False
                 index += 1
