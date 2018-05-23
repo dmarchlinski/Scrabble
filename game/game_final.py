@@ -57,6 +57,10 @@ def main():
         good_len = True
         while good_len:
 
+            if len(hand) < 7:
+                for i in range(7-(len(hand))):
+                    hand.append(random.choice(alphabet))
+                    
             row1 = raw_input("row of first letter: ")
             row1 = int(chr(int((ord(row1)) - 49)))
             column1 = input("column of first letter: ")
@@ -110,7 +114,7 @@ def main():
                                 hand_temp.append(word[i])
                             if word[i] in hand:
                                 count_hand = count_hand + 1
-                                del hand_temp[i]
+                                hand_temp.remove(word[i])
                             else:
                                 print "invalid letter(s)"
                                 count_hand = 0
@@ -123,23 +127,17 @@ def main():
                 if row2 > row1:  # top to bottom
                     if len(word) <= 10 - row1:
                         for i in range(len(word)):
-                            print i,board_letters[row1 + i][column1]
                             if board_letters[row1 + i][column1] == word[i]:
-                                 print word[i],"overlap"
                                  hand_temp.append(word[i])
                             if word[i] in hand_temp:
-                                 print "confirm",word[i]
                                  count_hand = count_hand + 1
                                  hand_temp.remove(word[i])
                             else:
                                  print "invalid letter(s)"
                                  count_hand = 0
-                            print "count", count_hand
                             if count_hand == len(word):
                                  for i in range(len(word)):
                                      board_letters[row1 + i][column1] = word[i]
-                                 print "done"
-                                 good_len == False
                     else:
                         print "does not fit on board"
 
@@ -152,7 +150,7 @@ def main():
                                 hand_temp.append(word[i])
                                 if word[i] in hand:
                                     count_hand = count_hand + 1
-                                    del hand_temp[i]
+                                    hand_temp.remove(word[i])
                                 else:
                                     print "invalid letter(s)"
                                     count_hand = 0
@@ -169,7 +167,7 @@ def main():
                                 hand_temp.append(word[i])
                                 if word[i] in hand:
                                     count_hand = count_hand + 1
-                                    del hand_temp[i]
+                                    hand_temp.remove(word[i])
                                 else:
                                     print "invalid letter(s)"
                                     count_hand = 0
@@ -181,6 +179,7 @@ def main():
 
             if count_hand == len(word):
                 good_len = False
+                hand = hand_temp
                 del hand_temp[:]
 
         word = word.upper()
