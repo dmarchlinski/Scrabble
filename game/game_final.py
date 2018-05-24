@@ -42,6 +42,10 @@ def main():
             for y in range(10):
                 boardui[x].append("[ " + str(board_letters[x][y]) + " ]")
 
+        if len(hand) < 7:
+            for i in range(7-(len(hand))):
+
+                hand.append(random.choice(alphabet))
         print "     1    2    3    4    5    6    7    8    9    10  \n"
         horizontal = "abcdefghij"
         count = 0
@@ -57,10 +61,6 @@ def main():
         good_len = True
         while good_len:
 
-            if len(hand) < 7:
-                for i in range(7-(len(hand))):
-                    hand.append(random.choice(alphabet))
-                    
             row1 = raw_input("row of first letter: ")
             row1 = int(chr(int((ord(row1)) - 49)))
             column1 = input("column of first letter: ")
@@ -105,6 +105,7 @@ def main():
                         exist_letters.append(j)
             hand_temp = hand[:]
             count_hand = 0
+            connecting = False
             if column1 == column2:
 
                 if row1 > row2:  # bottom to top
@@ -112,15 +113,19 @@ def main():
                         for i in range(len(word)):
                             if board_letters[row1 - i][column1] == word[i]:
                                 hand_temp.append(word[i])
-                            if word[i] in hand:
+                                connecting = True
+                            if word[i] in hand_temp:
                                 count_hand = count_hand + 1
                                 hand_temp.remove(word[i])
                             else:
                                 print "invalid letter(s)"
                                 count_hand = 0
                             if count_hand == len(word):
-                                for i in range(len(word)):
-                                    board_letters[row1 - i][column1] = word[i]
+                                if connecting == True:
+                                    for i in range(len(word)):
+                                        board_letters[row1 - i][column1] = word[i]
+                                else:
+                                    print "connect word to existing letter on board"
                     else:
                         print "does not fit on board"
 
@@ -129,6 +134,7 @@ def main():
                         for i in range(len(word)):
                             if board_letters[row1 + i][column1] == word[i]:
                                  hand_temp.append(word[i])
+                                 connecting = True
                             if word[i] in hand_temp:
                                  count_hand = count_hand + 1
                                  hand_temp.remove(word[i])
@@ -136,8 +142,9 @@ def main():
                                  print "invalid letter(s)"
                                  count_hand = 0
                             if count_hand == len(word):
-                                 for i in range(len(word)):
-                                     board_letters[row1 + i][column1] = word[i]
+                                if connecting == True:
+                                    for i in range(len(word)):
+                                        board_letters[row1 + i][column1] = word[i]
                     else:
                         print "does not fit on board"
 
@@ -148,15 +155,19 @@ def main():
                         for i in range(len(word)):
                             if board_letters[row1][column1 - i] == word[i]:
                                 hand_temp.append(word[i])
-                                if word[i] in hand:
-                                    count_hand = count_hand + 1
-                                    hand_temp.remove(word[i])
-                                else:
-                                    print "invalid letter(s)"
-                                    count_hand = 0
-                                if count_hand == len(word):
+                                connecting = True
+                            if word[i] in hand_temp:
+                                count_hand = count_hand + 1
+                                hand_temp.remove(word[i])
+                            else:
+                                print "invalid letter(s)"
+                                count_hand = 0
+                            if count_hand == len(word):
+                                if connecting == True:
                                     for i in range(len(word)):
                                         board_letters[row1][column1 - i] = word[i]
+                                else:
+                                    print "connect word to existing letter on board"
                     else:
                         print "does not fit on board"
 
@@ -165,24 +176,26 @@ def main():
                         for i in range(len(word)):
                             if board_letters[row1][column1 + i] == word[i]:
                                 hand_temp.append(word[i])
-                                if word[i] in hand:
-                                    count_hand = count_hand + 1
-                                    hand_temp.remove(word[i])
-                                else:
-                                    print "invalid letter(s)"
-                                    count_hand = 0
-                                if count_hand == len(word):
+                                connecting = True
+                            if word[i] in hand_temp:
+                                count_hand = count_hand + 1
+                                hand_temp.remove(word[i])
+                            else:
+                                print "invalid letter(s)"
+                                count_hand = 0
+                            if count_hand == len(word):
+                                if connecting == True:
                                     for i in range(len(word)):
-                                        board_letters[row1][column1 + 1] = word[i]
+                                        board_letters[row1][column1 + i] = word[i]
+                                else:
+                                    print "connect word to existing letter on board"
                     else:
                         print "does not fit on board"
-
             if count_hand == len(word):
                 good_len = False
                 hand = hand_temp
                 del hand_temp[:]
-
-        word = word.upper()
+                connecting = False
 
 
 
